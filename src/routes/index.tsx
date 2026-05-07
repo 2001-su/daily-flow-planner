@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTasks, CATEGORY_META, type Category } from "@/lib/tasks-store";
 import { AddTaskDialog } from "@/components/AddTaskDialog";
 import { TaskItem } from "@/components/TaskItem";
@@ -52,11 +52,10 @@ function Index() {
     });
   }, [tasks, filter, selectedDate]);
 
-  const greeting = useMemo(() => {
+  const [greeting, setGreeting] = useState("Hello");
+  useEffect(() => {
     const h = new Date().getHours();
-    if (h < 12) return "Good morning";
-    if (h < 18) return "Good afternoon";
-    return "Good evening";
+    setGreeting(h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening");
   }, []);
 
   const progress = counts.total ? Math.round((counts.done / counts.total) * 100) : 0;
