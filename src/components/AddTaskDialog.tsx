@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CATEGORY_META, type Category, type Priority, type Task } from "@/lib/tasks-store";
+import { CATEGORY_META, type Category, type Priority, type Repeat, type Task } from "@/lib/tasks-store";
 import { Plus, Star } from "lucide-react";
 
 interface Props {
