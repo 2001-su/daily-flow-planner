@@ -52,6 +52,7 @@ function seed(): Task[] {
       dueDate: today,
       dueTime: "07:00",
       reminder: true,
+      repeat: "daily",
       subtasks: [],
       createdAt: Date.now() - 3000,
     },
