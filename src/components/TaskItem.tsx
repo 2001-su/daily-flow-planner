@@ -1,4 +1,4 @@
-import { Star, Bell, Trash2, ChevronDown } from "lucide-react";
+import { Star, Bell, Trash2, ChevronDown, Repeat as RepeatIcon } from "lucide-react";
 import { useState } from "react";
 import { CATEGORY_META, type Task } from "@/lib/tasks-store";
 import { Checkbox } from "@/components/ui/checkbox";
