@@ -1,4 +1,4 @@
-import { Star, Bell, Trash2, ChevronDown } from "lucide-react";
+import { Star, Bell, Trash2, ChevronDown, Repeat as RepeatIcon } from "lucide-react";
 import { useState } from "react";
 import { CATEGORY_META, type Task } from "@/lib/tasks-store";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -33,6 +33,9 @@ export function TaskItem({ task, onToggle, onStar, onRemove, onToggleSub }: Prop
             <span>{cat.label}</span>
             {task.dueTime && <span>· {task.dueTime}</span>}
             {task.reminder && (<span className="inline-flex items-center gap-1"><Bell className="h-3 w-3" /> Reminder</span>)}
+            {task.repeat && task.repeat !== "none" && (
+              <span className="inline-flex items-center gap-1 capitalize"><RepeatIcon className="h-3 w-3" /> {task.repeat}</span>
+            )}
             {task.subtasks.length > 0 && (
               <span>· {task.subtasks.filter((s) => s.done).length}/{task.subtasks.length} subtasks</span>
             )}

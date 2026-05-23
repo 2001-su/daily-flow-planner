@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CATEGORY_META, type Category, type Priority, type Task } from "@/lib/tasks-store";
+import { CATEGORY_META, type Category, type Priority, type Repeat, type Task } from "@/lib/tasks-store";
 import { Plus, Star } from "lucide-react";
 
 interface Props {
@@ -25,10 +25,12 @@ export function AddTaskDialog({ onAdd, defaultDate, trigger }: Props) {
   const [dueTime, setDueTime] = useState("");
   const [reminder, setReminder] = useState(false);
   const [starred, setStarred] = useState(false);
+  const [repeat, setRepeat] = useState<Repeat>("none");
 
   function reset() {
     setTitle(""); setNotes(""); setCategory("personal"); setPriority("medium");
     setDueDate(defaultDate ?? ""); setDueTime(""); setReminder(false); setStarred(false);
+    setRepeat("none");
   }
 
   function submit() {
@@ -37,6 +39,7 @@ export function AddTaskDialog({ onAdd, defaultDate, trigger }: Props) {
       title: title.trim(),
       notes: notes.trim() || undefined,
       category, priority, starred, reminder,
+      repeat,
       dueDate: dueDate || undefined,
       dueTime: dueTime || undefined,
     });
@@ -97,6 +100,18 @@ export function AddTaskDialog({ onAdd, defaultDate, trigger }: Props) {
               <Label>Time</Label>
               <Input type="time" value={dueTime} onChange={(e) => setDueTime(e.target.value)} />
             </div>
+          </div>
+          <div className="space-y-2">
+            <Label>Repeat</Label>
+            <Select value={repeat} onValueChange={(v) => setRepeat(v as Repeat)}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">Does not repeat</SelectItem>
+                <SelectItem value="daily">Daily</SelectItem>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex items-center justify-between rounded-lg border bg-muted/40 px-4 py-3">
             <div>

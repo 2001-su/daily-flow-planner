@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 
 export type Priority = "low" | "medium" | "high";
 export type Category = "personal" | "work" | "study" | "health" | "wishlist";
+export type Repeat = "none" | "daily" | "weekly" | "monthly";
 
 export interface SubTask {
   id: string;
@@ -20,6 +21,7 @@ export interface Task {
   dueDate?: string; // ISO yyyy-mm-dd
   dueTime?: string; // HH:mm
   reminder: boolean;
+  repeat?: Repeat;
   subtasks: SubTask[];
   createdAt: number;
 }
@@ -50,6 +52,7 @@ function seed(): Task[] {
       dueDate: today,
       dueTime: "07:00",
       reminder: true,
+      repeat: "daily",
       subtasks: [],
       createdAt: Date.now() - 3000,
     },
@@ -127,7 +130,26 @@ export function useTasks() {
   }, []);
 
   const toggleDone = useCallback((id: string) => {
-    setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+    setTasks((prev) => {
+      const target = prev.find((t) => t.id === id);
+      const updated = prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
+      if (target && !target.done && target.repeat && target.repeat !== "none" && target.dueDate) {
+        const d = new Date(target.dueDate + "T00:00:00");
+        if (target.repeat === "daily") d.setDate(d.getDate() + 1);
+        else if (target.repeat === "weekly") d.setDate(d.getDate() + 7);
+        else if (target.repeat === "monthly") d.setMonth(d.getMonth() + 1);
+        const next: Task = {
+          ...target,
+          id: crypto.randomUUID(),
+          done: false,
+          dueDate: d.toISOString().slice(0, 10),
+          createdAt: Date.now(),
+          subtasks: target.subtasks.map((s) => ({ ...s, id: crypto.randomUUID(), done: false })),
+        };
+        return [next, ...updated];
+      }
+      return updated;
+    });
   }, []);
 
   const toggleStar = useCallback((id: string) => {
