@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 
 export type Priority = "low" | "medium" | "high";
 export type Category = "personal" | "work" | "study" | "health" | "wishlist";
+export type Repeat = "none" | "daily" | "weekly" | "monthly";
 
 export interface SubTask {
   id: string;
