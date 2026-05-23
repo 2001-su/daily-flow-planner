@@ -25,10 +25,12 @@ export function AddTaskDialog({ onAdd, defaultDate, trigger }: Props) {
   const [dueTime, setDueTime] = useState("");
   const [reminder, setReminder] = useState(false);
   const [starred, setStarred] = useState(false);
+  const [repeat, setRepeat] = useState<Repeat>("none");
 
   function reset() {
     setTitle(""); setNotes(""); setCategory("personal"); setPriority("medium");
     setDueDate(defaultDate ?? ""); setDueTime(""); setReminder(false); setStarred(false);
+    setRepeat("none");
   }
 
   function submit() {
@@ -37,6 +39,7 @@ export function AddTaskDialog({ onAdd, defaultDate, trigger }: Props) {
       title: title.trim(),
       notes: notes.trim() || undefined,
       category, priority, starred, reminder,
+      repeat,
       dueDate: dueDate || undefined,
       dueTime: dueTime || undefined,
     });
