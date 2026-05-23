@@ -101,6 +101,18 @@ export function AddTaskDialog({ onAdd, defaultDate, trigger }: Props) {
               <Input type="time" value={dueTime} onChange={(e) => setDueTime(e.target.value)} />
             </div>
           </div>
+          <div className="space-y-2">
+            <Label>Repeat</Label>
+            <Select value={repeat} onValueChange={(v) => setRepeat(v as Repeat)}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">Does not repeat</SelectItem>
+                <SelectItem value="daily">Daily</SelectItem>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="flex items-center justify-between rounded-lg border bg-muted/40 px-4 py-3">
             <div>
               <Label className="text-sm">Reminder alarm</Label>
