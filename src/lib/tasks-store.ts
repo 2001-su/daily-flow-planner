@@ -21,6 +21,7 @@ export interface Task {
   dueDate?: string; // ISO yyyy-mm-dd
   dueTime?: string; // HH:mm
   reminder: boolean;
+  repeat?: Repeat;
   subtasks: SubTask[];
   createdAt: number;
 }
